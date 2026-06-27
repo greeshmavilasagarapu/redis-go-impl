@@ -12,13 +12,13 @@ Follow https://redis.io/docs/latest/commands/redis-8-8-commands/
 - [x] DEL 
 - [x] ECHO
 - [ ] SETEX 
-- [ ] SETNX
-- [ ] EXISTS
-- [ ] KEYS 
-- [ ] APPEND 
-- [ ] STRLEN
-- [ ] MSET
-- [ ] MGET
+- [x] SETNX
+- [x] EXISTS
+- [x] KEYS 
+- [x] APPEND 
+- [x] STRLEN
+- [x] MSET
+- [x] MGET
 - [ ] MSETNX
 - [ ] FLUSHALL
 - [ ] INCR
