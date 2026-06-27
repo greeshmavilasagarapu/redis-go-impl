@@ -75,6 +75,50 @@ func handleConnection(conn net.Conn, store map[string]string) {
 				store[reqArr[4]] = ""
 			}
 
+		case "setnx", "SETNX":
+			if store[reqArr[4]] == "" {
+				store[reqArr[4]] = reqArr[6]
+				conn.Write([]byte(":1\r\n"))
+			} else {
+				conn.Write([]byte(":0\r\n"))
+			}
+		case "exists", "EXISTS":
+			c := 0
+			for i := 4; i < len(reqArr); i += 2 {
+				_, exists := store[reqArr[i]]
+				if exists {
+					c++
+				}
+			}
+			conn.Write([]byte(fmt.Sprintf(":%d\r\n", c)))
+		case "keys", "KEYS":
+			if reqArr[4] == "*" {
+				for key := range store {
+					conn.Write([]byte("+" + key + "\r\n"))
+				}
+			}
+		case "append", "APPEND":
+			store[reqArr[4]] += reqArr[6]
+			conn.Write([]byte(fmt.Sprintf(":%d\r\n", len(store[reqArr[4]]))))
+		case "strlen", "STRLEN":
+			conn.Write([]byte(fmt.Sprintf(":%d\r\n", len(store[reqArr[4]]))))
+		case "mset", "MSET":
+			for i := 4; i < len(reqArr); i += 4 {
+				store[reqArr[i]] = reqArr[i+2]
+
+			}
+			conn.Write([]byte("+OK\r\n"))
+		case "mget", "MGET":
+			for i := 4; i < len(reqArr); i += 2 {
+				j, ex := store[reqArr[i]]
+				if ex {
+					conn.Write([]byte("+" + j + "\r\n"))
+				} else {
+					conn.Write([]byte("_\r\n"))
+				}
+			}
+		case "incr", "INCR":
+
 		default:
 			conn.Write([]byte("-CMD NOT FOUND\r\n"))
 		}
