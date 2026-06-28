@@ -28,17 +28,17 @@ Follow https://redis.io/docs/latest/commands/redis-8-8-commands/
 - [ ] EXPIRE 
 - [ ] TTL 
 - [ ] PERSIST
-- [ ] HSET
-- [ ] HGET
+- [x] HSET
+- [x] HGET
 - [ ] HGETALL
 - [ ] HMGET
-- [ ] HMSET
-- [ ] HSETNX
+- [x] HMSET
+- [x] HSETNX
 - [ ] HSETEX
-- [ ] HDEL
-- [ ] HKEYS
-- [ ] HLEN
-- [ ] HVALS
+- [x] HDEL
+- [x] HKEYS
+- [x] HLEN
+- [x] HVALS
 
 ## Future Goals
 - Implement DB

@@ -118,7 +118,63 @@ func handleConnection(conn net.Conn, store map[string]string) {
 				}
 			}
 		case "incr", "INCR":
+		case "hset", "HSET":
+			//store[reqArr[4]] = reqArr[8]
+			c := 0
+			for i := 6; i < len(reqArr); i += 4 {
+				_, m := store[reqArr[i]]
+				if !m {
+					c++
+				}
+				store[reqArr[i]] = reqArr[i+2]
+			}
+			conn.Write([]byte(fmt.Sprintf(":%d\r\n", c)))
+		case "hget", "HGET":
+			value, exists := store[reqArr[6]]
+			if exists {
+				conn.Write([]byte("+" + value + "\r\n"))
+			} else {
+				conn.Write([]byte("_\r\n"))
+			}
+			//case "hgetall", "HGETALL":
+			//for field, value := range store[reqArr[4]] {
+			//conn.Write([]byte("+" + field + "\r\n"))
+			//conn.Write([]byte("+" + value + "\r\n"))
+			//}
+		case "hmset", "HMSET":
+			store[reqArr[6]] = reqArr[8]
+			conn.Write([]byte("+OK\r\n"))
+		case "hsetnx", "HSETNX":
+			if store[reqArr[6]] == "" {
+				store[reqArr[6]] = reqArr[8]
+				conn.Write([]byte(":1\r\n"))
+			} else {
+				conn.Write([]byte(":0\r\n"))
+			}
+		case "hdel", "HDEL":
+			if store[reqArr[6]] == "" {
+				conn.Write([]byte(":0\r\n"))
+			} else {
+				conn.Write([]byte(":1\r\n"))
+				store[reqArr[6]] = ""
+			}
 
+		case "hkeys", "HKEYS":
+			//if reqArr[6] == "" {
+			for key := range store {
+				conn.Write([]byte("+" + key + "\r\n"))
+			}
+			//}
+		case "hlen", "HLEN":
+			c := 0
+			for range store {
+				c++
+			}
+			conn.Write([]byte(fmt.Sprintf(":%d\r\n", c)))
+		case "hvals", "HVALS":
+			for _, value := range store {
+				conn.Write([]byte("+" + value + "\r\n"))
+			}
 		default:
 			conn.Write([]byte("-CMD NOT FOUND\r\n"))
 		}
