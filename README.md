@@ -11,7 +11,7 @@ Follow https://redis.io/docs/latest/commands/redis-8-8-commands/
 - [x] GET 
 - [x] DEL 
 - [x] ECHO
-- [ ] SETEX 
+- [x] SETEX 
 - [x] SETNX
 - [x] EXISTS
 - [x] KEYS 
@@ -19,22 +19,21 @@ Follow https://redis.io/docs/latest/commands/redis-8-8-commands/
 - [x] STRLEN
 - [x] MSET
 - [x] MGET
-- [ ] MSETNX
-- [ ] FLUSHALL
-- [ ] INCR
-- [ ] INCRBY
-- [ ] DECR
-- [ ] DECRBY
-- [ ] EXPIRE 
-- [ ] TTL 
-- [ ] PERSIST
+- [x] MSETNX
+- [x] FLUSHALL
+- [x] INCR
+- [x] INCRBY
+- [x] DECR
+- [x] DECRBY
+- [x] EXPIRE 
+- [x] TTL 
+- [x] PERSIST
 - [x] HSET
 - [x] HGET
-- [ ] HGETALL
-- [ ] HMGET
+- [x] HGETALL
+- [x] HMGET
 - [x] HMSET
 - [x] HSETNX
-- [ ] HSETEX
 - [x] HDEL
 - [x] HKEYS
 - [x] HLEN
